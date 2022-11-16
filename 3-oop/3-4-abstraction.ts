@@ -7,6 +7,7 @@
   // class는 interface의 규격을 다 따라야한다.
   interface CoffeeMaker {
     makeCoffee(shot: number): CoffeeCup;
+    fillCoffeeBeans(beans: number): void;
   }
 
   /**
@@ -64,5 +65,6 @@
   maker.makeCoffee(2);
 
   const maker2: CoffeeMaker = CoffeeMachine.makeMachine(22);
-  maker.makeCoffee(2);
+  maker2.makeCoffee(2);
+  maker2.fillCoffeeBeans(2);
 }
