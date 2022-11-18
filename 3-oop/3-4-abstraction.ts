@@ -7,7 +7,7 @@
   // class는 interface의 규격을 다 따라야한다.
   interface CoffeeMaker {
     makeCoffee(shot: number): CoffeeCup;
-    fillCoffeeBeans(beans: number): void;
+    // fillCoffeeBeans(beans: number): void;
   }
 
   /**
@@ -22,7 +22,7 @@
       this.currentCoffeeBean = coffeeBean;
     }
 
-    // 아얘 인스턴스화를 바로 시키는 함수!
+    // 아얘 인스턴스화를 바로 시키는 함수! 팩토리 메서드
     static makeMachine(coffeBeans: number): CoffeeMachine {
       return new CoffeeMachine(coffeBeans);
     }
@@ -66,5 +66,5 @@
 
   const maker2: CoffeeMaker = CoffeeMachine.makeMachine(22);
   maker2.makeCoffee(2);
-  maker2.fillCoffeeBeans(2);
+  // maker2.fillCoffeeBeans(2);
 }
