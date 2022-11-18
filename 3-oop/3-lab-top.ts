@@ -44,15 +44,19 @@
       }
     }
     // 전원이 켜지자마자 실행되는 함수!
-    private static autoOff(currentPower: number) {
-      // 파워가 0이거나 0보다 작아지면 빠져나옴!
-      while (currentPower > 0) {
-        setInterval(() => {
-          currentPower -= 1;
-        }, 1000);
-      }
-      console.log('남은 파워 없으므로 강제 종료!');
-    }
+    // private static autoOff(currentPower: number) {
+    //   // 파워가 0이거나 0보다 작아지면 빠져나옴!
+    //   let power = currentPower;
+    //   const timer = setInterval(() => {
+    //     power -= 1;
+    //     console.log(power);
+    //   }, 1000);
+    //   console.log('timer', timer);
+
+    //   if (power === 0 || power < 0) {
+    //     return;
+    //   }
+    // }
 
     private static async booting() {
       if (LapTop.powerStatus === true) {
@@ -64,7 +68,7 @@
     async powerOn(power: number) {
       if (LapTop.powerStatus === false && LapTop.chargePower(power)) {
         LapTop.powerStatus = true;
-        LapTop.autoOff(LapTop.currentPower);
+        // LapTop.autoOff(LapTop.currentPower);
         console.log('전원이 켜졌습니다!');
         await LapTop.booting();
         const response = await LapTop.openMainWindow();
@@ -84,7 +88,8 @@
   async function computer() {
     const myLabTop = new LapTop();
     console.log(myLabTop);
-    await myLabTop.powerOn(71);
+    await myLabTop.powerOn(11);
+    myLabTop.powerOff();
   }
 
   computer();
