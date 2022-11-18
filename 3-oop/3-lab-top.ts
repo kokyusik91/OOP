@@ -1,7 +1,6 @@
 {
   interface Computer {
     /**
-     *
      * @param power 파워를 충전해줘야 컴퓨터가 켜집니다!
      */
     powerOn(power: number): void;
@@ -9,7 +8,7 @@
 
   class LapTop implements Computer {
     private static powerStatus: boolean = false;
-    private static MINIMUM_POWER_NEEDED: number = 70;
+    private static MINIMUM_POWER_NEEDED: number = 10;
     private static currentPower: number = 0;
     constructor() {}
     static makeMachine(): LapTop {
@@ -45,7 +44,15 @@
       }
     }
     // 전원이 켜지자마자 실행되는 함수!
-    private static autoOff(currentPower: number) {}
+    private static autoOff(currentPower: number) {
+      // 파워가 0이거나 0보다 작아지면 빠져나옴!
+      while (currentPower > 0) {
+        setInterval(() => {
+          currentPower -= 1;
+        }, 1000);
+      }
+      console.log('남은 파워 없으므로 강제 종료!');
+    }
 
     private static async booting() {
       if (LapTop.powerStatus === true) {
@@ -57,6 +64,7 @@
     async powerOn(power: number) {
       if (LapTop.powerStatus === false && LapTop.chargePower(power)) {
         LapTop.powerStatus = true;
+        LapTop.autoOff(LapTop.currentPower);
         console.log('전원이 켜졌습니다!');
         await LapTop.booting();
         const response = await LapTop.openMainWindow();
