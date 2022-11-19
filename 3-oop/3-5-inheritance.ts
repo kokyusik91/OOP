@@ -69,6 +69,7 @@
 
   class CaffeLatteMachine extends CoffeeMachine {
     constructor(beans: number, private serialNumber: string) {
+      // 상속을 하게되면 부모에서 받는 인자를 super함수에서 받아줘야한다.
       super(beans);
     }
     // 자식 Class에만 있는 메서드
