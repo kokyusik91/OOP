@@ -40,6 +40,7 @@
       if (this.currentCoffeeBean < shots * CoffeeMachine.BEANS_GRAM_PER_SHOT) {
         throw new Error('Not Enough coffee beans!');
       }
+      // 이미 갈고 있는 커피 콩에서 갈린 콩
       this.currentCoffeeBean -= CoffeeMachine.BEANS_GRAM_PER_SHOT * shots;
     }
 
@@ -56,6 +57,7 @@
     }
 
     makeCoffee(shots: number): CoffeeCup {
+      /** 커피를 만드는 과정들을  */
       this.grindBeans(shots);
       this.preheat();
       return this.extract(shots);
@@ -63,8 +65,9 @@
   }
   const maker: CoffeeMachine = CoffeeMachine.makeMachine(22);
   maker.makeCoffee(2);
+  maker.fillCoffeeBeans(2);
 
   const maker2: CoffeeMaker = CoffeeMachine.makeMachine(22);
   maker2.makeCoffee(2);
-  // maker2.fillCoffeeBeans(2);
+  // maker2.fillCoffeeBeans(2); // -> Error
 }
