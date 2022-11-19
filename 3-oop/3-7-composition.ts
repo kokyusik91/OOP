@@ -3,6 +3,7 @@
     shots: number;
     hasMilk?: boolean;
     hasSugar?: boolean;
+    milkName?: string;
   };
   // class의 규격 === 계약서
   // class는 interface의 규격을 다 따라야한다.
@@ -77,11 +78,13 @@
       this.grindBeans(shots);
       this.preheat();
       const coffee = this.extract(shots);
+      // 기존 커피에 설탕 추가
       const sugarAdded = this.sugar.addSugar(coffee);
+      // 기존 커피에 우유 추가
       return this.milk.addMilk(sugarAdded);
     }
   }
-
+  // 비싼 설탕을 추가해줌.
   class FancySugar implements Sugarmaker {
     addSugar(coffee: CoffeeCup): CoffeeCup {
       console.log('비싼 설탕을 넣는다... 🤑');
@@ -91,7 +94,7 @@
       };
     }
   }
-
+  // 싼 설탕을 추가해줌.
   class CheapSugar implements Sugarmaker {
     private getSugar(): void {
       console.log('싼 설탕을 넣는다..... 🤥');
@@ -104,21 +107,23 @@
       };
     }
   }
-
-  class SeoulMilk implements MilkMaker {
-    private steamMilk(): void {
-      console.log('서울 우유 주입!!! 🍼');
+  // 우유를 주입 해줌
+  class Milk implements MilkMaker {
+    constructor(private milk: string) {}
+    private steamMilk(milk: string): void {
+      console.log(`${milk} 우유 데우기!!! 🍼`);
     }
 
     addMilk(coffee: CoffeeCup): CoffeeCup {
-      this.steamMilk();
+      this.steamMilk(this.milk);
       return {
         ...coffee,
         hasMilk: true,
+        milkName: `${this.milk} 우유`,
       };
     }
   }
-
+  // 우유를 빼줌
   class NoMilk implements MilkMaker {
     addMilk(coffee: CoffeeCup): CoffeeCup {
       console.log('우유 빼기.... ✏️');
@@ -127,13 +132,13 @@
       };
     }
   }
-
+  // 다양한 속성들을 만들어서 coffeeMachine에 주입할 수 있다
   const fancySugar = new FancySugar();
   const cheapSugar = new CheapSugar();
-  const seoulMilk = new SeoulMilk();
+  const choCo = new Milk('딸기');
   const noMilk = new NoMilk();
   // 다양한 클래스들을 주입해서 다양한 인스턴스들을 만들 수 있다!!
-  const fancyCoffeeMachine = new CoffeeMachine(23, fancySugar, seoulMilk);
+  const fancyCoffeeMachine = new CoffeeMachine(23, fancySugar, choCo);
   console.log(fancyCoffeeMachine.makeCoffee(2));
 
   const cheapCoffeeMachine = new CoffeeMachine(23, cheapSugar, noMilk);
