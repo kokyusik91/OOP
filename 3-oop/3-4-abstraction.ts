@@ -7,13 +7,18 @@
   // class는 interface의 규격을 다 따라야한다.
   interface CoffeeMaker {
     makeCoffee(shot: number): CoffeeCup;
-    // fillCoffeeBeans(beans: number): void;
+  }
+
+  interface CommercialCoffeeMaker {
+    makeCoffee(shot: number): CoffeeCup;
+    fillCoffeeBeans(beans: number): void;
+    clean(): void;
   }
 
   /**
    * 클래스를 만든 다는 것은 서로 관련 있는 데이터나 함수를 묶어 놓는 기능을 한다.
    */
-  class CoffeeMachine implements CoffeeMaker {
+  class CoffeeMachine implements CoffeeMaker, CommercialCoffeeMaker {
     // 클래스의 data들은 위에 설정해 놓을 수 있다.
     private currentCoffeeBean: number = 0;
     private static BEANS_GRAM_PER_SHOT: number = 7;
@@ -32,6 +37,10 @@
         throw new Error('value for beans should be greater than 0');
       }
       this.currentCoffeeBean += beans;
+    }
+
+    clean() {
+      console.log('Cleaning the machine!!');
     }
     // 커피 그라인더로 갈기
     // grindBeans, preheat, extract함수들에 private 키워드를 붙여주면서, 외부에서는 접근할 수 없게한다.
@@ -63,11 +72,39 @@
       return this.extract(shots);
     }
   }
-  const maker: CoffeeMachine = CoffeeMachine.makeMachine(22);
-  maker.makeCoffee(2);
-  maker.fillCoffeeBeans(2);
+  // const maker: CoffeeMachine = CoffeeMachine.makeMachine(22);
+  // maker.makeCoffee(2);
+  // maker.fillCoffeeBeans(2);
 
   const maker2: CoffeeMaker = CoffeeMachine.makeMachine(22);
   maker2.makeCoffee(2);
   // maker2.fillCoffeeBeans(2); // -> Error
+
+  const maker3: CommercialCoffeeMaker = CoffeeMachine.makeMachine(22);
+  maker3.makeCoffee(2);
+
+  // 인스턴스를 인자로 받아 올 수 있다!
+  class AmateurUser {
+    // CoffeeMaker라는 interface를 받아온다.
+    constructor(private machine: CoffeeMaker) {}
+    makeAmaturCoffee() {
+      const coffee = this.machine.makeCoffee(2);
+      console.log(coffee);
+    }
+  }
+
+  class ProBarista {
+    // CommercialCoffeeMaker라는 interface를 받아온다.
+    constructor(private machine: CommercialCoffeeMaker) {}
+    makeProBaristaCoffee() {
+      this.machine.fillCoffeeBeans(3);
+      const coffee = this.machine.makeCoffee(2);
+      this.machine.clean();
+    }
+  }
+
+  const maker: CoffeeMachine = CoffeeMachine.makeMachine(22);
+  const amateur = new AmateurUser(maker);
+  amateur.makeAmaturCoffee();
+  const pro = new ProBarista(maker);
 }
