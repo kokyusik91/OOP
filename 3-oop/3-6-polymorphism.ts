@@ -97,7 +97,7 @@
       };
     }
   }
-
+  // 다양한 머신들을 만들 수 있다!
   const machines = [
     new CoffeeMachine(16),
     new CaffeLatteMachine(16, '1'),
