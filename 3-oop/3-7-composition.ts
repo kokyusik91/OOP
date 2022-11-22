@@ -85,9 +85,13 @@
     }
   }
   // 비싼 설탕을 추가해줌.
-  class FancySugar implements Sugarmaker {
+  class Sugar implements Sugarmaker {
+    constructor(private sugar: string) {}
+    private makeSugar(sugar: string) {
+      console.log(`${sugar}설탕을 넣는다... 🤑`);
+    }
     addSugar(coffee: CoffeeCup): CoffeeCup {
-      console.log('비싼 설탕을 넣는다... 🤑');
+      this.makeSugar(this.sugar);
       return {
         ...coffee,
         hasSugar: true,
@@ -95,18 +99,18 @@
     }
   }
   // 싼 설탕을 추가해줌.
-  class CheapSugar implements Sugarmaker {
-    private getSugar(): void {
-      console.log('싼 설탕을 넣는다..... 🤥');
-    }
-    addSugar(coffee: CoffeeCup): CoffeeCup {
-      this.getSugar();
-      return {
-        ...coffee,
-        hasSugar: true,
-      };
-    }
-  }
+  // class fancySugar implements Sugarmaker {
+  //   private getSugar(): void {
+  //     console.log('싼 설탕을 넣는다..... 🤥');
+  //   }
+  //   addSugar(coffee: CoffeeCup): CoffeeCup {
+  //     this.getSugar();
+  //     return {
+  //       ...coffee,
+  //       hasSugar: true,
+  //     };
+  //   }
+  // }
   // 우유를 주입 해줌
   class Milk implements MilkMaker {
     constructor(private milk: string) {}
@@ -133,14 +137,13 @@
     }
   }
   // 다양한 속성들을 만들어서 coffeeMachine에 주입할 수 있다
-  const fancySugar = new FancySugar();
-  const cheapSugar = new CheapSugar();
+  const fancySugar = new Sugar('존나 비싼');
   const choCo = new Milk('딸기');
   const noMilk = new NoMilk();
   // 다양한 클래스들을 주입해서 다양한 인스턴스들을 만들 수 있다!!
   const fancyCoffeeMachine = new CoffeeMachine(23, fancySugar, choCo);
   console.log(fancyCoffeeMachine.makeCoffee(2));
 
-  const cheapCoffeeMachine = new CoffeeMachine(23, cheapSugar, noMilk);
+  const cheapCoffeeMachine = new CoffeeMachine(23, fancySugar, noMilk);
   console.log(cheapCoffeeMachine.makeCoffee(3));
 }
