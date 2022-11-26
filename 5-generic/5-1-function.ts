@@ -13,6 +13,7 @@
    * @param arg : generic
    * @returns : generic
    * 어떤 값을 인자로 받아서, null이 아니면 받은 타입 그대로 return 한다.
+   * T또는 null 타입을 받아서 T타입 을 다시 return 한다.
    */
   function checkNotNull<T>(arg: T | null): T {
     if (arg == null) {
