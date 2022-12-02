@@ -1,8 +1,19 @@
 {
 
+  class TimeoutError extends Error {
+  
+  }
+
+  class OfflineError extends Error {
+
+  }
+  
+  const wow = new TimeoutError();
+  console.log(wow)
+
 class NetWorkClient {
   tryToConnet() {
-    throw new Error("net work is not existed")
+    throw new OfflineError("net work is not existed")
   }
 }
   class UserService {
