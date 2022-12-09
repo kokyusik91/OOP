@@ -8,7 +8,7 @@
 
   type VideoMetaData = Pick<Video, 'id' | 'title'>;
 
-  function getVideo(id: string): Video {
+  function getVideo2(id: string): Video {
     return {
       id,
       title: 'video',
@@ -17,7 +17,7 @@
     };
   }
   // 모든 비디오 정보가 아닌 Meta 정보만 가져오는 API
-  function getVideoMetaData(id: string): VideoMetaData {
+  function getVideoMetaData2(id: string): VideoMetaData {
     return {
       id: '1',
       title: '새로운 희망',
