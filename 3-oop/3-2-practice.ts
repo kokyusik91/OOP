@@ -26,9 +26,7 @@
       }
       this.currentCoffeeBeanGrams += beans * CoffeeMaker.COFFEBEAN_PER_1SHOT;
     }
-    // 커피를 만드는 메서드
     makeCoffee(shots: number): CoffeCup {
-      // 현재 커피 머신에 들어있는 커피 그램 보다 만들 커피가 더 많으면 에러
       if (
         this.currentCoffeeBeanGrams <
         shots * CoffeeMaker.COFFEBEAN_PER_1SHOT
